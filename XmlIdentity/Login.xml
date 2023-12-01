@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Identity>
+	<Users>
+		<User ID="Guid" Password="SomePassword">
+			<Roles>
+				<Role>Administrator</Role>
+			</Roles>
+		</User>
+	</Users>
+</Identity>

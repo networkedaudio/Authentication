@@ -1,0 +1,41 @@
+{
+  "Files": [
+    {
+      "Id": "Y:\\Forum\\Authentication\\BlazorAuthentication\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\BlazorAuthentication.bundle.scp.css",
+      "PackagePath": "staticwebassets\\BlazorAuthentication.bundle.scp.css"
+    },
+    {
+      "Id": "Y:\\Forum\\Authentication\\BlazorAuthentication\\wwwroot\\app.css",
+      "PackagePath": "staticwebassets\\app.css"
+    },
+    {
+      "Id": "Y:\\Forum\\Authentication\\BlazorAuthentication\\wwwroot\\bootstrap\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\bootstrap\\bootstrap.min.css"
+    },
+    {
+      "Id": "Y:\\Forum\\Authentication\\BlazorAuthentication\\wwwroot\\bootstrap\\bootstrap.min.css.map",
+      "PackagePath": "staticwebassets\\bootstrap\\bootstrap.min.css.map"
+    },
+    {
+      "Id": "Y:\\Forum\\Authentication\\BlazorAuthentication\\wwwroot\\favicon.png",
+      "PackagePath": "staticwebassets\\favicon.png"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.BlazorAuthentication.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.BlazorAuthentication.props",
+      "PackagePath": "build\\BlazorAuthentication.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.BlazorAuthentication.props",
+      "PackagePath": "buildMultiTargeting\\BlazorAuthentication.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.BlazorAuthentication.props",
+      "PackagePath": "buildTransitive\\BlazorAuthentication.props"
+    }
+  ],
+  "ElementsToRemove": []
+}
