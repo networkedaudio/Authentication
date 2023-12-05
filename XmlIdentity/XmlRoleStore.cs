@@ -2,66 +2,137 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace XmlIdentity
 {
-    public class XmlRoleStore : IRoleStore<ApplicationUser>
+    public class XmlRoleStore : IRoleStore<IdentityRole>, IRoleClaimStore<IdentityRole>
     {
-        public Task<IdentityResult> CreateAsync(ApplicationUser role, CancellationToken cancellationToken)
+        public XmlRoleStore()
+        { 
+        }
+        public Task AddClaimAsync(IdentityRole role, Claim claim, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IdentityResult> DeleteAsync(ApplicationUser role, CancellationToken cancellationToken)
+        public Task<IdentityResult> CreateAsync(IdentityRole role, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            if (Guid.TryParse(role.Id, out var id))
+            {
+                CredentialStores.Roles.AddOrUpdate(id, role, (key, oldValue) => role);
+            }
+            return Task.FromResult(IdentityResult.Success);
+        }
+
+        public Task<IdentityResult> DeleteAsync(IdentityRole role, CancellationToken cancellationToken)
+        {
+            if(Guid.TryParse(role.Id, out var id))
+            {
+                CredentialStores.Roles.TryRemove(id, out var oldRole);
+            }
+
+            return Task.FromResult(IdentityResult.Success);
         }
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            // throw new NotImplementedException();
         }
 
-        public Task<ApplicationUser?> FindByIdAsync(string roleId, CancellationToken cancellationToken)
+        public Task<IList<Claim>> GetClaimsAsync(IdentityRole role, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
 
-        public Task<ApplicationUser?> FindByNameAsync(string normalizedRoleName, CancellationToken cancellationToken)
+        public Task<string?> GetNormalizedRoleNameAsync(IdentityRole role, CancellationToken cancellationToken)
+        {
+            Guid.TryParse(role.Id, out var id);
+            return Task.FromResult(CredentialStores.Roles[id].NormalizedName);
+        }
+
+        public Task<string> GetRoleIdAsync(IdentityRole role, CancellationToken cancellationToken)
+        {
+            return Task.FromResult(role.Id);
+        }
+
+        public Task<string?> GetRoleNameAsync(IdentityRole role, CancellationToken cancellationToken)
+        {
+            if(role.Name != null)
+            {
+                return Task.FromResult(role.Name);
+            }
+
+            Guid.TryParse(role.Id, out var id);
+            if(CredentialStores.Roles.TryGetValue(id, out var storedRole))
+            {
+                return Task.FromResult(storedRole.Name);
+            }
+
+            return Task.FromResult<string>(null);
+        }
+
+        public Task RemoveClaimAsync(IdentityRole role, Claim claim, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
 
-        public Task<string?> GetNormalizedRoleNameAsync(ApplicationUser role, CancellationToken cancellationToken)
+        public Task SetNormalizedRoleNameAsync(IdentityRole role, string? normalizedName, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            Guid.TryParse(role.Id, out var id);
+            CredentialStores.Roles.AddOrUpdate(id, role, (key, oldValue) =>
+            {
+                role.NormalizedName = normalizedName;
+                return role;
+            });
+
+            return Task.CompletedTask;
         }
 
-        public Task<string> GetRoleIdAsync(ApplicationUser role, CancellationToken cancellationToken)
+        public Task SetRoleNameAsync(IdentityRole role, string? roleName, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            Guid.TryParse(role.Id, out var id);
+            CredentialStores.Roles.AddOrUpdate(id, role, (key, oldValue) =>
+            {
+                role.Name = roleName;
+                return role;
+            });
+
+            return Task.CompletedTask;
         }
 
-        public Task<string?> GetRoleNameAsync(ApplicationUser role, CancellationToken cancellationToken)
+        public Task<IdentityResult> UpdateAsync(IdentityRole role, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            Guid.TryParse(role.Name, out var id);
+            CredentialStores.Roles.AddOrUpdate(id, role, (key, oldValue) => role);
+
+            return Task.FromResult(IdentityResult.Success);
         }
 
-        public Task SetNormalizedRoleNameAsync(ApplicationUser role, string? normalizedName, CancellationToken cancellationToken)
+        Task<IdentityRole?> IRoleStore<IdentityRole>.FindByIdAsync(string roleId, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            if (Guid.TryParse(roleId, out var roleGuid))
+            {
+                if (CredentialStores.Roles.TryGetValue(roleGuid, out var identity))
+                {
+                    return Task.FromResult(identity);
+                }
+            }
+
+            return Task.FromResult<IdentityRole>(null);
         }
 
-        public Task SetRoleNameAsync(ApplicationUser role, string? roleName, CancellationToken cancellationToken)
+        Task<IdentityRole?> IRoleStore<IdentityRole>.FindByNameAsync(string normalizedRoleName, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<IdentityResult> UpdateAsync(ApplicationUser role, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
+            var foundByName = CredentialStores.Roles.Values.Where(x => x.NormalizedName == normalizedRoleName);
+            if (foundByName.Count() > 0) {
+                return Task.FromResult(foundByName.First());
+            } else
+            {
+                return Task.FromResult<IdentityRole>(null);
+            }
         }
     }
 }

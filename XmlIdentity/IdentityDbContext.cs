@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace XmlIdentity
 {
-    internal class IdentityXmlContext
+    internal class IdentityXmlContext 
     {
     }
 }

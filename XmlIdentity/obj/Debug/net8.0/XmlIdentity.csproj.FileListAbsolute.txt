@@ -22,3 +22,4 @@ Y:\Forum\Authentication\XmlIdentity\obj\Debug\net8.0\XmlIdentity.dll
 Y:\Forum\Authentication\XmlIdentity\obj\Debug\net8.0\refint\XmlIdentity.dll
 Y:\Forum\Authentication\XmlIdentity\obj\Debug\net8.0\XmlIdentity.pdb
 Y:\Forum\Authentication\XmlIdentity\obj\Debug\net8.0\ref\XmlIdentity.dll
+Y:\Forum\Authentication\XmlIdentity\obj\Debug\net8.0\XmlIdentity.sourcelink.json

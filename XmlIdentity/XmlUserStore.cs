@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
@@ -10,35 +11,41 @@ using System.Threading.Tasks;
 
 namespace XmlIdentity
 {
-    public class XmlUserStore : IUserStore<ApplicationUser>, IUserEmailStore<ApplicationUser>, IUserPasswordStore<ApplicationUser>, IRoleStore<ApplicationUser>, IRoleClaimStore<ApplicationUser>, IUserPhoneNumberStore<ApplicationUser>
+    public class XmlUserStore : IUserStore<ApplicationUser>, IUserEmailStore<ApplicationUser>, IUserPasswordStore<ApplicationUser>, IUserPhoneNumberStore<ApplicationUser>, IUserRoleStore<ApplicationUser>
     {
 
         public XmlUserStore() 
         {
-            ApplicationUser applicationUser = new ApplicationUser();
-            applicationUser.Id = Guid.Empty;
-            applicationUser.Name = "Anonymous";
-           // CredentialStores.IDs.AddOrUpdate(applicationUser.Id, applicationUser, (key, oldValue) => applicationUser);
         }
 
-        public Task AddClaimAsync(ApplicationUser role, Claim claim, CancellationToken cancellationToken = default)
+        public Task AddToRoleAsync(ApplicationUser user, string roleName, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var roles = CredentialStores.Roles.Where(x => x.Value.Name.Equals(roleName, StringComparison.OrdinalIgnoreCase));
+            var role = roles.First().Value;
+            CredentialStores.UserRoles.AddOrUpdate(user.Id, new List<IdentityRole>() { role }, (key, oldValue) =>
+            {
+                if (!oldValue.Contains(role))
+                {
+                    oldValue.Add(role);
+                }
+                return oldValue;
+            });
+
+            return Task.CompletedTask;
         }
-        private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly UserManager<ApplicationUser> _userManager;
 
         public Task<IdentityResult> CreateAsync(ApplicationUser user, CancellationToken cancellationToken)
         {
             CredentialStores.IDs.AddOrUpdate(user.Id, user, (key, oldValue) => user);
 
-            _userManager.AddToRoleAsync(user, "Admin");
+           // UserManager.AddToRoleAsync(user, "Administrator");    
         
             return Task.FromResult(IdentityResult.Success);
            
 
             return Task.FromResult(IdentityResult.Failed(new IdentityError[] { new IdentityError { Description = "Unable to add user." } }));
         }
+
 
         public Task<IdentityResult> DeleteAsync(ApplicationUser user, CancellationToken cancellationToken)
         {
@@ -50,6 +57,7 @@ namespace XmlIdentity
 
             return Task.FromResult(IdentityResult.Failed(new IdentityError[] { new IdentityError { Description = "Unable to delete user." } }));
         }
+
 
         public void Dispose()
         {
@@ -101,11 +109,6 @@ namespace XmlIdentity
             return Task.FromResult<ApplicationUser>(null);
         }
 
-        public Task<IList<Claim>> GetClaimsAsync(ApplicationUser role, CancellationToken cancellationToken = default)
-        {
-            throw new NotImplementedException();
-        }
-
         public Task<string?> GetEmailAsync(ApplicationUser user, CancellationToken cancellationToken)
         {
             if (CredentialStores.IDs.TryGetValue(user.Id, out var applicationUser))
@@ -136,11 +139,7 @@ namespace XmlIdentity
             return Task.FromResult<string>(null);
         }
 
-        public Task<string?> GetNormalizedRoleNameAsync(ApplicationUser role, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
+   
         public Task<string?> GetNormalizedUserNameAsync(ApplicationUser user, CancellationToken cancellationToken)
         {
             if(CredentialStores.IDs.TryGetValue(user.Id, out var applicationUser))
@@ -150,6 +149,8 @@ namespace XmlIdentity
 
             return Task.FromResult<string>(null);
         }
+
+
 
         public Task<string?> GetPasswordHashAsync(ApplicationUser user, CancellationToken cancellationToken)
         {
@@ -181,20 +182,27 @@ namespace XmlIdentity
             return Task.FromResult(false);
         }
 
-        public Task<string> GetRoleIdAsync(ApplicationUser role, CancellationToken cancellationToken)
+        public Task<IList<string>> GetRolesAsync(ApplicationUser user, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
-        }
 
-        public Task<string?> GetRoleNameAsync(ApplicationUser role, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
+            var roleStrings = new List<string>();
+
+            if (CredentialStores.UserRoles.TryGetValue(user.Id, out var roles))
+            {
+
+                foreach (var role in roles)
+                {
+                    roleStrings.Add(role.Name);
+                }
+            }
+                return Task.FromResult((IList<string>)roleStrings);
         }
 
         public Task<string> GetUserIdAsync(ApplicationUser user, CancellationToken cancellationToken)
         {
             return Task.FromResult(user.Id.ToString());
         }
+
 
         public Task<string?> GetUserNameAsync(ApplicationUser user, CancellationToken cancellationToken)
         {
@@ -206,12 +214,23 @@ namespace XmlIdentity
             throw new Exception("User not found");
         }
 
+
+
         public Task<bool> HasPasswordAsync(ApplicationUser user, CancellationToken cancellationToken)
         {
             return Task.FromResult(CredentialStores.Passwords.ContainsKey(user.Id));
         }
 
-        public Task RemoveClaimAsync(ApplicationUser role, Claim claim, CancellationToken cancellationToken = default)
+
+
+        public Task<bool> IsInRoleAsync(ApplicationUser user, string roleName, CancellationToken cancellationToken)
+        {
+            var roles = GetRolesAsync(user, cancellationToken).Result;
+            return Task.FromResult(roles.Where(x => x.Equals(roleName, StringComparison.OrdinalIgnoreCase)).Count() > 0);
+        }
+
+
+        public Task RemoveFromRoleAsync(ApplicationUser user, string roleName, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }
@@ -255,10 +274,7 @@ namespace XmlIdentity
             return Task.CompletedTask;
         }
 
-        public Task SetNormalizedRoleNameAsync(ApplicationUser role, string? normalizedName, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
+  
 
         public Task SetNormalizedUserNameAsync(ApplicationUser user, string? normalizedName, CancellationToken cancellationToken)
         {
@@ -271,6 +287,7 @@ namespace XmlIdentity
 
             return Task.CompletedTask;
         }
+
 
         public Task SetPasswordHashAsync(ApplicationUser user, string? passwordHash, CancellationToken cancellationToken)
         {
@@ -296,26 +313,7 @@ namespace XmlIdentity
             return Task.CompletedTask;
         }
 
-        public Task SetRoleNameAsync(ApplicationUser role, string? roleName, CancellationToken cancellationToken)
-        {
-            if (Enum.TryParse(typeof(RoleTypes), roleName, out var enumObject))
-            {
-                RoleTypes roleType = (RoleTypes)enumObject;
-
-                CredentialStores.Roles.AddOrUpdate(role.Id, new List<RoleTypes>() { (RoleTypes) roleType }, (key, oldValue) =>
-                {
-                    if (!oldValue.Contains(roleType))
-                    {
-                        oldValue.Add(roleType);
-                    }
-
-                    return oldValue;
-                });
-            }
-
-            return Task.CompletedTask;
-                    
-        }
+    
 
         public Task SetUserNameAsync(ApplicationUser user, string? userName, CancellationToken cancellationToken)
         {
@@ -329,6 +327,7 @@ namespace XmlIdentity
 
             return Task.CompletedTask;
         }
+
 
         public Task<IdentityResult> UpdateAsync(ApplicationUser user, CancellationToken cancellationToken)
         {
@@ -348,7 +347,10 @@ namespace XmlIdentity
 
         }
 
-  
+        Task<IList<ApplicationUser>> IUserRoleStore<ApplicationUser>.GetUsersInRoleAsync(string roleName, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
     }
 
 }

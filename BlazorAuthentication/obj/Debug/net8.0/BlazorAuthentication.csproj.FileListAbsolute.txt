@@ -139,3 +139,4 @@ Y:\Forum\Authentication\BlazorAuthentication\obj\Debug\net8.0\BlazorAuthenticati
 Y:\Forum\Authentication\BlazorAuthentication\obj\Debug\net8.0\ref\BlazorAuthentication.dll
 Y:\Forum\Authentication\BlazorAuthentication\bin\Debug\net8.0\XmlIdentity.dll
 Y:\Forum\Authentication\BlazorAuthentication\bin\Debug\net8.0\XmlIdentity.pdb
+Y:\Forum\Authentication\BlazorAuthentication\obj\Debug\net8.0\BlazorAuthentication.sourcelink.json

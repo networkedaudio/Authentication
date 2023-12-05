@@ -1,8 +1,11 @@
 ﻿@page "/auth"
 
 @using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Identity
+@using XmlIdentity
 
-@attribute [Authorize]
+@inject UserManager<ApplicationUser> UM
+
 
 <PageTitle>Auth</PageTitle>
 
@@ -10,4 +13,22 @@
 
 <AuthorizeView>
     Hello @context.User.Identity?.Name!
+
+    @context.User.IsInRole("Administrator")
+    
+    
 </AuthorizeView>
+
+@code {
+    protected override Task OnInitializedAsync()
+    {
+
+        var user =  UM.FindByEmailAsync("support@naud.io").Result;
+        UM.AddToRoleAsync(user, "Administrator");
+
+
+        return base.OnInitializedAsync();
+    }
+   
+
+}

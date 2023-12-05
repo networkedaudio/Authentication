@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Microsoft.AspNetCore.Identity;
+namespace XmlIdentity.Identity;
 
 /// <summary>
 /// Represents a login and its associated provider for a user.

@@ -14,7 +14,7 @@ namespace XmlIdentity
         internal static ConcurrentDictionary<Guid, ApplicationUser> IDs = new ConcurrentDictionary<Guid, ApplicationUser>();
         internal static ConcurrentDictionary<Guid, string> Passwords = new ConcurrentDictionary<Guid, string>();
         internal static ConcurrentDictionary<Guid, PhoneNumber> PhoneNumbers = new ConcurrentDictionary<Guid, PhoneNumber>(); 
-        internal static ConcurrentDictionary<Guid, List<RoleTypes>> RoleType = new ConcurrentDictionary<Guid, List<RoleTypes>>();
-        internal static ConcurrentDictionary<Guid, IdentityRole> UserRoles = new ConcurrentDictionary<Guid, IdentityRole>();
+        internal static ConcurrentDictionary<Guid, IdentityRole> Roles = new ConcurrentDictionary<Guid, IdentityRole>();
+        internal static ConcurrentDictionary<Guid, List<IdentityRole>> UserRoles = new ConcurrentDictionary<Guid, List<IdentityRole>>();
     }
 }
