@@ -13,6 +13,5 @@ namespace XmlIdentity
             public string Name { get; set; }
             public string Email { get; set; }
 
-        public List<RoleTypes> Roles { get; set; }
     }
 }

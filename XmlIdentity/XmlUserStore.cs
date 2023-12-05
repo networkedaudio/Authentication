@@ -16,6 +16,7 @@ namespace XmlIdentity
 
         public XmlUserStore() 
         {
+            CredentialStores.Deserialize();
         }
 
         public Task AddToRoleAsync(ApplicationUser user, string roleName, CancellationToken cancellationToken)
@@ -31,6 +32,8 @@ namespace XmlIdentity
                 return oldValue;
             });
 
+            CredentialStores.Serialize();
+
             return Task.CompletedTask;
         }
 
@@ -38,12 +41,11 @@ namespace XmlIdentity
         {
             CredentialStores.IDs.AddOrUpdate(user.Id, user, (key, oldValue) => user);
 
-           // UserManager.AddToRoleAsync(user, "Administrator");    
-        
+            CredentialStores.Serialize();
+           
             return Task.FromResult(IdentityResult.Success);
            
 
-            return Task.FromResult(IdentityResult.Failed(new IdentityError[] { new IdentityError { Description = "Unable to add user." } }));
         }
 
 
@@ -54,6 +56,7 @@ namespace XmlIdentity
                 return Task.FromResult(IdentityResult.Success);
             }
 
+            CredentialStores.Serialize();
 
             return Task.FromResult(IdentityResult.Failed(new IdentityError[] { new IdentityError { Description = "Unable to delete user." } }));
         }
@@ -66,9 +69,15 @@ namespace XmlIdentity
 
         public Task<ApplicationUser?> FindByEmailAsync(string normalizedEmail, CancellationToken cancellationToken)
         {
-            ApplicationUser applicationUser = CredentialStores.IDs.Where(x => x.Value.NormalizedEmail == normalizedEmail).First().Value;
+            var applicationUsers = CredentialStores.IDs.Where(x => x.Value.NormalizedEmail == normalizedEmail);
 
-            return Task.FromResult(applicationUser);
+            if(applicationUsers.Count() > 0)
+            {
+                return Task.FromResult(applicationUsers.First().Value);
+            }
+                
+
+            return Task.FromResult<ApplicationUser>(null);
         }
 
         public Task<ApplicationUser?> FindByIdAsync(string userId, CancellationToken cancellationToken)
@@ -232,7 +241,29 @@ namespace XmlIdentity
 
         public Task RemoveFromRoleAsync(ApplicationUser user, string roleName, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            if(IsInRoleAsync(user, roleName, cancellationToken).Result)
+            {
+                List<IdentityRole> updatedList = new List<IdentityRole>();
+
+                if (CredentialStores.UserRoles.TryGetValue(user.Id, out var roleList))
+                {
+                    foreach (var identityRole in roleList)
+                    {
+                        if (!identityRole.Name.Equals(roleName, StringComparison.OrdinalIgnoreCase))
+                        {
+                            updatedList.Add(identityRole);
+                        }
+                    }
+                }
+
+                CredentialStores.UserRoles.AddOrUpdate(user.Id, updatedList, (key, oldValue) => updatedList);
+
+                CredentialStores.Serialize();
+
+
+                
+            }
+                return Task.CompletedTask;
         }
 
         public Task SetEmailAsync(ApplicationUser user, string? email, CancellationToken cancellationToken)
@@ -246,6 +277,7 @@ namespace XmlIdentity
                 return oldValue;
             });
 
+            CredentialStores.Serialize();
 
             return Task.CompletedTask;
         }
@@ -259,6 +291,7 @@ namespace XmlIdentity
                 return oldValue;
             });
 
+            CredentialStores.Serialize();
             return Task.CompletedTask;
         }
 
@@ -271,6 +304,8 @@ namespace XmlIdentity
                 return oldValue;
             });
 
+
+            CredentialStores.Serialize();
             return Task.CompletedTask;
         }
 
@@ -285,13 +320,15 @@ namespace XmlIdentity
                 return oldValue;
             });
 
+            CredentialStores.Serialize();
             return Task.CompletedTask;
         }
 
 
         public Task SetPasswordHashAsync(ApplicationUser user, string? passwordHash, CancellationToken cancellationToken)
         {
-            CredentialStores.Passwords.AddOrUpdate(user.Id, passwordHash, (key, oldValue) => passwordHash); 
+            CredentialStores.Passwords.AddOrUpdate(user.Id, passwordHash, (key, oldValue) => passwordHash);
+            CredentialStores.Serialize();
             return Task.CompletedTask;
         }
 
@@ -302,14 +339,14 @@ namespace XmlIdentity
                 oldValue.Number = phoneNumber;
                 return oldValue;
             });
-
+            CredentialStores.Serialize();
             return Task.CompletedTask;
         }
 
         public Task SetPhoneNumberConfirmedAsync(ApplicationUser user, bool confirmed, CancellationToken cancellationToken)
         {
             CredentialStores.PhoneNumbers[user.Id].IsConfirmed = confirmed;
-
+            CredentialStores.Serialize();
             return Task.CompletedTask;
         }
 
@@ -324,7 +361,7 @@ namespace XmlIdentity
                 oldValue.Name = userName;
                 return oldValue;
             });
-
+            CredentialStores.Serialize();
             return Task.CompletedTask;
         }
 

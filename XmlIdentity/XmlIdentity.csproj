@@ -7,6 +7,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Standard\**" />
+    <EmbeddedResource Remove="Standard\**" />
+    <None Remove="Standard\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="IdentityDbContext.cs" />
+    <Compile Remove="RoleEnums.cs" />
+    <Compile Remove="XmlClaimsPrincipalFactory.cs" />
+    <Compile Remove="XmlRoleClaimStore.cs" />
+    <Compile Remove="XmlUserRepository.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.0" />
   </ItemGroup>
 

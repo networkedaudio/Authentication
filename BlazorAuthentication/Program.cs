@@ -13,23 +13,25 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.Configure<PasswordHasherOptions>(options => options.IterationCount = 600_000);
 
-//builder.Services.AddScoped<XmlClaimsPrincipalFactory>();
-//builder.Services.AddScoped<IRoleClaimStore<IdentityRole>, XmlRoleStore>();
-
 builder.Services.AddCascadingAuthenticationState();
 builder.Services.AddScoped<IdentityUserAccessor>();
 builder.Services.AddScoped<IdentityRedirectManager>();
 builder.Services.AddScoped<AuthenticationStateProvider, IdentityRevalidatingAuthenticationStateProvider>();
 
-//builder.Services.AddTransient<IUserStore<ApplicationUser>, XmlUserStore>();
-//builder.Services.AddTransient<IRoleStore<IdentityRole>, XmlRoleStore>();
-
-//builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
- //   .AddDefaultTokenProviders();
+builder.Services.AddTransient<IUserStore<ApplicationUser>, XmlUserStore>();
+builder.Services.AddTransient<IRoleStore<IdentityRole>, XmlRoleStore>();
 
 
-
-builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false)
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+{
+    options.SignIn.RequireConfirmedAccount = false;
+    options.Password.RequiredLength = 16;
+    options.Password.RequireUppercase = true;
+    options.Password.RequireLowercase = true;
+    options.Password.RequireDigit = true;
+    options.Password.RequireNonAlphanumeric = true;
+    options.Password.RequiredUniqueChars = 5;
+})
     .AddUserStore<XmlUserStore>()
     .AddRoles<IdentityRole>()
     .AddRoleStore<XmlRoleStore>()
@@ -53,15 +55,9 @@ builder.Services.AddAuthorization(options =>
 });
 
 
-/*
+
 // builder.Services.AddIdentity<ApplicationUser, IdentityRole>();
 
-builder.Services.AddAuthentication(options =>
-    {
-        options.DefaultScheme = IdentityConstants.ApplicationScheme;
-        options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
-    })
-    .AddIdentityCookies();
 
 // builder.Services.AddIdentity<ApplicationUser, IdentityRole>();
 /*

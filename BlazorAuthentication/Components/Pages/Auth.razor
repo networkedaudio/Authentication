@@ -3,7 +3,7 @@
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Identity
 @using XmlIdentity
-
+@inject AuthenticationStateProvider ASP
 @inject UserManager<ApplicationUser> UM
 
 
@@ -23,10 +23,14 @@
     protected override Task OnInitializedAsync()
     {
 
-        var user =  UM.FindByEmailAsync("support@naud.io").Result;
-        UM.AddToRoleAsync(user, "Administrator");
-
-
+        var currentUser = ASP.GetAuthenticationStateAsync().Result;
+        var userName = currentUser.User.Identity?.Name;
+        if (!string.IsNullOrEmpty(userName))
+        {
+            var user = UM.FindByNameAsync(userName).Result;
+            UM.AddToRoleAsync(user, "Administrator");
+        }
+   
         return base.OnInitializedAsync();
     }
    

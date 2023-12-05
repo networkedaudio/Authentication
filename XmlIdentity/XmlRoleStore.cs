@@ -8,14 +8,10 @@ using System.Threading.Tasks;
 
 namespace XmlIdentity
 {
-    public class XmlRoleStore : IRoleStore<IdentityRole>, IRoleClaimStore<IdentityRole>
+    public class XmlRoleStore : IRoleStore<IdentityRole>
     {
         public XmlRoleStore()
         { 
-        }
-        public Task AddClaimAsync(IdentityRole role, Claim claim, CancellationToken cancellationToken = default)
-        {
-            throw new NotImplementedException();
         }
 
         public Task<IdentityResult> CreateAsync(IdentityRole role, CancellationToken cancellationToken)
@@ -24,6 +20,9 @@ namespace XmlIdentity
             {
                 CredentialStores.Roles.AddOrUpdate(id, role, (key, oldValue) => role);
             }
+
+            CredentialStores.Serialize();
+
             return Task.FromResult(IdentityResult.Success);
         }
 
@@ -34,17 +33,14 @@ namespace XmlIdentity
                 CredentialStores.Roles.TryRemove(id, out var oldRole);
             }
 
+            CredentialStores.Serialize();
+
             return Task.FromResult(IdentityResult.Success);
         }
 
         public void Dispose()
         {
             // throw new NotImplementedException();
-        }
-
-        public Task<IList<Claim>> GetClaimsAsync(IdentityRole role, CancellationToken cancellationToken = default)
-        {
-            throw new NotImplementedException();
         }
 
         public Task<string?> GetNormalizedRoleNameAsync(IdentityRole role, CancellationToken cancellationToken)
@@ -74,11 +70,6 @@ namespace XmlIdentity
             return Task.FromResult<string>(null);
         }
 
-        public Task RemoveClaimAsync(IdentityRole role, Claim claim, CancellationToken cancellationToken = default)
-        {
-            throw new NotImplementedException();
-        }
-
         public Task SetNormalizedRoleNameAsync(IdentityRole role, string? normalizedName, CancellationToken cancellationToken)
         {
             Guid.TryParse(role.Id, out var id);
@@ -87,6 +78,7 @@ namespace XmlIdentity
                 role.NormalizedName = normalizedName;
                 return role;
             });
+            CredentialStores.Serialize();
 
             return Task.CompletedTask;
         }
@@ -100,6 +92,8 @@ namespace XmlIdentity
                 return role;
             });
 
+            CredentialStores.Serialize();
+
             return Task.CompletedTask;
         }
 
@@ -107,6 +101,8 @@ namespace XmlIdentity
         {
             Guid.TryParse(role.Name, out var id);
             CredentialStores.Roles.AddOrUpdate(id, role, (key, oldValue) => role);
+
+            CredentialStores.Serialize();
 
             return Task.FromResult(IdentityResult.Success);
         }
