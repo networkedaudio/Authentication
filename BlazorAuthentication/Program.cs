@@ -7,6 +7,13 @@ using System.Data;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel;
+using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.IO;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -42,15 +49,32 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
+var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "ForumWebHost");
+/*
+builder.Services.AddDataProtection()
+    .UseCustomCryptographicAlgorithms(new CngCbcAuthenticatedEncryptorConfiguration
+    {
+        // Passed to BCryptOpenAlgorithmProvider
+        EncryptionAlgorithm = "AES",
+        EncryptionAlgorithmProvider = null,
 
+        // Specified in bits
+        EncryptionAlgorithmKeySize = 512,
 
-
+        // Passed to BCryptOpenAlgorithmProvider
+        HashAlgorithm = "SHA512",
+        HashAlgorithmProvider = null
+    })
+    .SetApplicationName("ForumWebHost")
+    .PersistKeysToFileSystem(new DirectoryInfo(path))
+    .ProtectKeysWithDpapiNG();
+*/
 builder.Services.AddAuthorization(options =>
 {
   
     options.AddPolicy("RequireAdminRole", policy =>
     {
-        policy.RequireClaim(ClaimTypes.Role, new[] { "Administrator", "SuperAdministrator" });
+        policy.RequireClaim(ClaimTypes.Role, new[] { "Administrator", "SiteAdministrator" });
     });
 });
 
@@ -75,9 +99,11 @@ builder.Services.AddIdentityCore<ApplicationUser>(options => options.SignIn.Requ
 
 builder.Services.AddAuthorization(options =>
 {
+    options.AddPolicy("SiteAdministrator", policy => policy.RequireRole("SiteAdministrator"));
     options.AddPolicy("Administrator", policy => policy.RequireRole("Administrator"));
-    options.AddPolicy("Manager", policy => policy.RequireRole("Manager"));
-    options.AddPolicy("Member", policy => policy.RequireRole("Member"));
+    options.AddPolicy("Maintainer", policy => policy.RequireRole("Maintainer"));
+    options.AddPolicy("MonitorPlus", policy => policy.RequireRole("MonitorPlus"));
+    options.AddPolicy("Monitor", policy => policy.RequireRole("Monitor"));
 });
 
 var app = builder.Build();
@@ -106,7 +132,7 @@ app.UseAntiforgery();
 using (var scope = app.Services.CreateScope())
 {
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-    var roles = new[] { "SuperAdministrator", "Administrator", "Manager", "Member" };
+    var roles = new[] { "NetworkAdministrator", "SiteAdministrator", "Administrator", "Maintainer", "MonitorPlus", "Monitor" };
 
     foreach (var role in roles)
     {

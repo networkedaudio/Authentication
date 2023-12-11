@@ -1,14 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
-using System;
+﻿using Microsoft.AspNetCore.Identity;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
-using System.Xml;
 
 namespace XmlIdentity
 {
@@ -24,30 +18,34 @@ namespace XmlIdentity
 
         internal static void Deserialize()
         {
-            if(File.Exists(CredentialFile))
+            if (IDs.Count == 0)
             {
-                foreach(var line in File.ReadAllLines(CredentialFile))
+                if (File.Exists(CredentialFile))
                 {
-                    int firstBracket = line.IndexOf('{');
-                    string identifier = line.Substring(0,firstBracket) ;
-
-                    switch (identifier.Trim())
+                    foreach (var line in File.ReadAllLines(CredentialFile))
                     {
-                        case "IDs:":
-                            IDs = JsonSerializer.Deserialize<ConcurrentDictionary<Guid, ApplicationUser>>(line.Substring(firstBracket));
-                            break;
-                        case "Passwords:":
-                            Passwords = JsonSerializer.Deserialize<ConcurrentDictionary<Guid, string>>(line.Substring(firstBracket));
-                            break;
-                        case "Phone Numbers:":
-                            PhoneNumbers = JsonSerializer.Deserialize<ConcurrentDictionary<Guid, PhoneNumber>>(line.Substring(firstBracket));
-                            break;
-                        case "Roles:":
-                            Roles = JsonSerializer.Deserialize<ConcurrentDictionary<Guid, IdentityRole>>(line.Substring(firstBracket));
-                            break;
-                        case "User Roles:":
-                            UserRoles = JsonSerializer.Deserialize<ConcurrentDictionary<Guid, List<IdentityRole>>>(line.Substring(firstBracket));
-                            break;
+                        int firstBracket = line.IndexOf(':') + 1;
+
+                        string identifier = line.Substring(0, firstBracket - 1);
+
+                        switch (identifier.Trim())
+                        {
+                            case "IDs":
+                                IDs = JsonSerializer.Deserialize<ConcurrentDictionary<Guid, ApplicationUser>>(DPAPIProtection.Unprotect(line.Substring(firstBracket).Trim()));
+                                break;
+                            case "Passwords":
+                                Passwords = JsonSerializer.Deserialize<ConcurrentDictionary<Guid, string>>(DPAPIProtection.Unprotect(line.Substring(firstBracket).Trim()));
+                                break;
+                            case "Phone Numbers":
+                                PhoneNumbers = JsonSerializer.Deserialize<ConcurrentDictionary<Guid, PhoneNumber>>(DPAPIProtection.Unprotect(line.Substring(firstBracket).Trim()));
+                                break;
+                            case "Roles":
+                                Roles = JsonSerializer.Deserialize<ConcurrentDictionary<Guid, IdentityRole>>(DPAPIProtection.Unprotect(line.Substring(firstBracket).Trim()));
+                                break;
+                            case "User Roles":
+                                UserRoles = JsonSerializer.Deserialize<ConcurrentDictionary<Guid, List<IdentityRole>>>(DPAPIProtection.Unprotect(line.Substring(firstBracket).Trim()));
+                                break;
+                        }
                     }
                 }
             }
@@ -57,11 +55,11 @@ namespace XmlIdentity
 
             StringBuilder jsonDocument = new StringBuilder();
 
-            jsonDocument.AppendLine("IDs: " + JsonSerializer.Serialize(IDs));
-            jsonDocument.AppendLine("Passwords: " +JsonSerializer.Serialize(Passwords));
-            jsonDocument.AppendLine("Phone Numbers: " + JsonSerializer.Serialize(PhoneNumbers));
-            jsonDocument.AppendLine("Roles: " + JsonSerializer.Serialize(Roles));
-            jsonDocument.AppendLine("User Roles: " + JsonSerializer.Serialize(UserRoles));
+            jsonDocument.AppendLine("IDs: " + DPAPIProtection.Protect(JsonSerializer.Serialize(IDs)));
+            jsonDocument.AppendLine("Passwords: " + DPAPIProtection.Protect(JsonSerializer.Serialize(Passwords)));
+            jsonDocument.AppendLine("Phone Numbers: " + DPAPIProtection.Protect(JsonSerializer.Serialize(PhoneNumbers)));
+            jsonDocument.AppendLine("Roles: " + DPAPIProtection.Protect(JsonSerializer.Serialize(Roles)));
+            jsonDocument.AppendLine("User Roles: " + DPAPIProtection.Protect(JsonSerializer.Serialize(UserRoles)));
 
             File.WriteAllText(CredentialFile, jsonDocument.ToString());
         }

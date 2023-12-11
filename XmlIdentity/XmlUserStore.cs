@@ -106,7 +106,7 @@ namespace XmlIdentity
         {
             foreach (var currentIdentity in CredentialStores.IDs.Values) 
             {
-                if (currentIdentity.Name.Equals(normalizedUserName, StringComparison.OrdinalIgnoreCase))
+                if ((currentIdentity.NormalizedUserName?.Equals(normalizedUserName) == true) || (currentIdentity.UserName?.Equals(normalizedUserName, StringComparison.OrdinalIgnoreCase) == true))
                 {
                     ApplicationUser applicationUser = new ApplicationUser();
                     applicationUser.UserName = normalizedUserName;
