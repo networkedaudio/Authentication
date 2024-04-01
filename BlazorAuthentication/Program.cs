@@ -1,20 +1,10 @@
 using BlazorAuthentication.Components;
 using BlazorAuthentication.Components.Account;
-using XmlIdentity;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
-using System.Data;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using System.Composition;
 using System.Security.Claims;
-using Microsoft.AspNetCore.Identity.UI.Services;
-using Microsoft.AspNetCore.DataProtection;
-using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel;
-using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.IO;
-
+using XmlIdentity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -74,7 +64,7 @@ builder.Services.AddAuthorization(options =>
   
     options.AddPolicy("RequireAdminRole", policy =>
     {
-        policy.RequireClaim(ClaimTypes.Role, new[] { "Administrator", "SiteAdministrator" });
+        policy.RequireClaim(ClaimTypes.Role, new[] { UserRoleEnum.NetworkAdministrator.ToString(), UserRoleEnum.SiteAdministrator.ToString(), UserRoleEnum.Administrator.ToString() });
     });
 });
 
@@ -132,9 +122,8 @@ app.UseAntiforgery();
 using (var scope = app.Services.CreateScope())
 {
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-    var roles = new[] { "NetworkAdministrator", "SiteAdministrator", "Administrator", "Maintainer", "MonitorPlus", "Monitor" };
 
-    foreach (var role in roles)
+    foreach (var role in Enum.GetNames(typeof(UserRoleEnum)))
     {
         if (!await roleManager.RoleExistsAsync(role))
         {

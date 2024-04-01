@@ -21,6 +21,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Login.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.DataProtection.Abstractions" Version="8.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.0" />
   </ItemGroup>

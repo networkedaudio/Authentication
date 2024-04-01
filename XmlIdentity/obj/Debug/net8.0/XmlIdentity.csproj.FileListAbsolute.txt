@@ -23,3 +23,16 @@ Y:\Forum\Authentication\XmlIdentity\obj\Debug\net8.0\refint\XmlIdentity.dll
 Y:\Forum\Authentication\XmlIdentity\obj\Debug\net8.0\XmlIdentity.pdb
 Y:\Forum\Authentication\XmlIdentity\obj\Debug\net8.0\ref\XmlIdentity.dll
 Y:\Forum\Authentication\XmlIdentity\obj\Debug\net8.0\XmlIdentity.sourcelink.json
+C:\Development\Hermes\Authentication\XmlIdentity\bin\Debug\net8.0\XmlIdentity.deps.json
+C:\Development\Hermes\Authentication\XmlIdentity\bin\Debug\net8.0\XmlIdentity.dll
+C:\Development\Hermes\Authentication\XmlIdentity\bin\Debug\net8.0\XmlIdentity.pdb
+C:\Development\Hermes\Authentication\XmlIdentity\obj\Debug\net8.0\XmlIdentity.csproj.AssemblyReference.cache
+C:\Development\Hermes\Authentication\XmlIdentity\obj\Debug\net8.0\XmlIdentity.GeneratedMSBuildEditorConfig.editorconfig
+C:\Development\Hermes\Authentication\XmlIdentity\obj\Debug\net8.0\XmlIdentity.AssemblyInfoInputs.cache
+C:\Development\Hermes\Authentication\XmlIdentity\obj\Debug\net8.0\XmlIdentity.AssemblyInfo.cs
+C:\Development\Hermes\Authentication\XmlIdentity\obj\Debug\net8.0\XmlIdentity.csproj.CoreCompileInputs.cache
+C:\Development\Hermes\Authentication\XmlIdentity\obj\Debug\net8.0\XmlIdentity.sourcelink.json
+C:\Development\Hermes\Authentication\XmlIdentity\obj\Debug\net8.0\XmlIdentity.dll
+C:\Development\Hermes\Authentication\XmlIdentity\obj\Debug\net8.0\refint\XmlIdentity.dll
+C:\Development\Hermes\Authentication\XmlIdentity\obj\Debug\net8.0\XmlIdentity.pdb
+C:\Development\Hermes\Authentication\XmlIdentity\obj\Debug\net8.0\ref\XmlIdentity.dll

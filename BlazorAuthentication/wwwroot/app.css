@@ -49,3 +49,31 @@ h1:focus {
 .darker-border-checkbox.form-check-input {
     border-color: #929292;
 }
+
+th.userRoleHeader {
+    transform: rotate(-90deg);
+    max-width: 50px;
+    line-height: 17px;
+}
+
+th.userTableName {
+    width: 400px;
+    min-width: 150px;
+}
+
+td.userTableButton button {
+    width: 100px;
+    border: 0;
+}
+
+td.userTableCheck {
+    text-align: center;
+    height: 50px;
+}
+
+input.userTableCheckBox {
+    width: 20px;
+    height: 20px;
+    /* padding: 10px; */
+    margin: 20px;
+}

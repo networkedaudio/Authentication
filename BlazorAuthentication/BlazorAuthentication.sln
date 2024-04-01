@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34309.116
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorAuthentication", "BlazorAuthentication.csproj", "{85A748B8-0FB4-42CE-BAE0-981B0FDB55A1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorAuthentication", "BlazorAuthentication.csproj", "{85A748B8-0FB4-42CE-BAE0-981B0FDB55A1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XmlIdentity", "..\XmlIdentity\XmlIdentity.csproj", "{B5E41148-1DD3-47D1-85CF-8652126DC8E2}"
 EndProject

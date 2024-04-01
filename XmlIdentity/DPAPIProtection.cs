@@ -10,7 +10,7 @@ namespace XmlIdentity
             if (CurrentProtector == null)
             {
                 // get the path to %LOCALAPPDATA%\myapp-keys
-                var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "ForumWebHost");
+                var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MissionAudioServer");
 
                 // instantiate the data protection system at this folder
                 var dataProtectionProvider = DataProtectionProvider.Create(new DirectoryInfo(path));
@@ -24,11 +24,13 @@ namespace XmlIdentity
       
         public static string Protect(string protect) 
         {
+            return protect;
             return GetProvider().Protect(protect);
         }
 
         public static string Unprotect(string protect)
         {
+            return protect;
             return GetProvider().Unprotect(protect);
         }
 

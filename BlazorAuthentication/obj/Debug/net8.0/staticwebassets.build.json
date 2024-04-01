@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "odrH4M20cLE5Bs2PSoclhSeKejDJOuOswDsgr0+OYrc=",
+  "Hash": "FoKPtILLMUXe92KYTzXyWqf3fwxugstxs8itgMJNwGM=",
   "Source": "BlazorAuthentication",
   "BasePath": "_content/BlazorAuthentication",
   "Mode": "Default",
@@ -10,17 +10,17 @@
     {
       "Name": "BlazorAuthentication\\wwwroot",
       "Source": "BlazorAuthentication",
-      "ContentRoot": "Y:\\Forum\\Authentication\\BlazorAuthentication\\wwwroot\\",
+      "ContentRoot": "C:\\Development\\Hermes\\Authentication\\BlazorAuthentication\\wwwroot\\",
       "BasePath": "_content/BlazorAuthentication",
       "Pattern": "**"
     }
   ],
   "Assets": [
     {
-      "Identity": "Y:\\Forum\\Authentication\\BlazorAuthentication\\obj\\Debug\\net8.0\\scopedcss\\bundle\\BlazorAuthentication.styles.css",
+      "Identity": "C:\\Development\\Hermes\\Authentication\\BlazorAuthentication\\obj\\Debug\\net8.0\\scopedcss\\bundle\\BlazorAuthentication.styles.css",
       "SourceId": "BlazorAuthentication",
       "SourceType": "Computed",
-      "ContentRoot": "Y:\\Forum\\Authentication\\BlazorAuthentication\\obj\\Debug\\net8.0\\scopedcss\\bundle\\",
+      "ContentRoot": "C:\\Development\\Hermes\\Authentication\\BlazorAuthentication\\obj\\Debug\\net8.0\\scopedcss\\bundle\\",
       "BasePath": "_content/BlazorAuthentication",
       "RelativePath": "BlazorAuthentication.styles.css",
       "AssetKind": "All",
@@ -33,13 +33,13 @@
       "AssetTraitValue": "ApplicationBundle",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "Y:\\Forum\\Authentication\\BlazorAuthentication\\obj\\Debug\\net8.0\\scopedcss\\bundle\\BlazorAuthentication.styles.css"
+      "OriginalItemSpec": "C:\\Development\\Hermes\\Authentication\\BlazorAuthentication\\obj\\Debug\\net8.0\\scopedcss\\bundle\\BlazorAuthentication.styles.css"
     },
     {
-      "Identity": "Y:\\Forum\\Authentication\\BlazorAuthentication\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\BlazorAuthentication.bundle.scp.css",
+      "Identity": "C:\\Development\\Hermes\\Authentication\\BlazorAuthentication\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\BlazorAuthentication.bundle.scp.css",
       "SourceId": "BlazorAuthentication",
       "SourceType": "Computed",
-      "ContentRoot": "Y:\\Forum\\Authentication\\BlazorAuthentication\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\",
+      "ContentRoot": "C:\\Development\\Hermes\\Authentication\\BlazorAuthentication\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\",
       "BasePath": "_content/BlazorAuthentication",
       "RelativePath": "BlazorAuthentication.bundle.scp.css",
       "AssetKind": "All",
@@ -52,13 +52,13 @@
       "AssetTraitValue": "ProjectBundle",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "Y:\\Forum\\Authentication\\BlazorAuthentication\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\BlazorAuthentication.bundle.scp.css"
+      "OriginalItemSpec": "C:\\Development\\Hermes\\Authentication\\BlazorAuthentication\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\BlazorAuthentication.bundle.scp.css"
     },
     {
-      "Identity": "Y:\\Forum\\Authentication\\BlazorAuthentication\\wwwroot\\app.css",
+      "Identity": "C:\\Development\\Hermes\\Authentication\\BlazorAuthentication\\wwwroot\\app.css",
       "SourceId": "BlazorAuthentication",
       "SourceType": "Discovered",
-      "ContentRoot": "Y:\\Forum\\Authentication\\BlazorAuthentication\\wwwroot\\",
+      "ContentRoot": "C:\\Development\\Hermes\\Authentication\\BlazorAuthentication\\wwwroot\\",
       "BasePath": "_content/BlazorAuthentication",
       "RelativePath": "app.css",
       "AssetKind": "All",
@@ -74,10 +74,10 @@
       "OriginalItemSpec": "wwwroot\\app.css"
     },
     {
-      "Identity": "Y:\\Forum\\Authentication\\BlazorAuthentication\\wwwroot\\bootstrap\\bootstrap.min.css",
+      "Identity": "C:\\Development\\Hermes\\Authentication\\BlazorAuthentication\\wwwroot\\bootstrap\\bootstrap.min.css",
       "SourceId": "BlazorAuthentication",
       "SourceType": "Discovered",
-      "ContentRoot": "Y:\\Forum\\Authentication\\BlazorAuthentication\\wwwroot\\",
+      "ContentRoot": "C:\\Development\\Hermes\\Authentication\\BlazorAuthentication\\wwwroot\\",
       "BasePath": "_content/BlazorAuthentication",
       "RelativePath": "bootstrap/bootstrap.min.css",
       "AssetKind": "All",
@@ -93,10 +93,10 @@
       "OriginalItemSpec": "wwwroot\\bootstrap\\bootstrap.min.css"
     },
     {
-      "Identity": "Y:\\Forum\\Authentication\\BlazorAuthentication\\wwwroot\\bootstrap\\bootstrap.min.css.map",
+      "Identity": "C:\\Development\\Hermes\\Authentication\\BlazorAuthentication\\wwwroot\\bootstrap\\bootstrap.min.css.map",
       "SourceId": "BlazorAuthentication",
       "SourceType": "Discovered",
-      "ContentRoot": "Y:\\Forum\\Authentication\\BlazorAuthentication\\wwwroot\\",
+      "ContentRoot": "C:\\Development\\Hermes\\Authentication\\BlazorAuthentication\\wwwroot\\",
       "BasePath": "_content/BlazorAuthentication",
       "RelativePath": "bootstrap/bootstrap.min.css.map",
       "AssetKind": "All",
@@ -112,10 +112,10 @@
       "OriginalItemSpec": "wwwroot\\bootstrap\\bootstrap.min.css.map"
     },
     {
-      "Identity": "Y:\\Forum\\Authentication\\BlazorAuthentication\\wwwroot\\favicon.png",
+      "Identity": "C:\\Development\\Hermes\\Authentication\\BlazorAuthentication\\wwwroot\\favicon.png",
       "SourceId": "BlazorAuthentication",
       "SourceType": "Discovered",
-      "ContentRoot": "Y:\\Forum\\Authentication\\BlazorAuthentication\\wwwroot\\",
+      "ContentRoot": "C:\\Development\\Hermes\\Authentication\\BlazorAuthentication\\wwwroot\\",
       "BasePath": "_content/BlazorAuthentication",
       "RelativePath": "favicon.png",
       "AssetKind": "All",

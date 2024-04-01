@@ -61,6 +61,12 @@ namespace XmlIdentity
             jsonDocument.AppendLine("Roles: " + DPAPIProtection.Protect(JsonSerializer.Serialize(Roles)));
             jsonDocument.AppendLine("User Roles: " + DPAPIProtection.Protect(JsonSerializer.Serialize(UserRoles)));
 
+            if (!File.Exists(CredentialFile))
+            {
+                var directory = Path.GetDirectoryName(CredentialFile);
+                Directory.CreateDirectory(directory);
+
+            }
             File.WriteAllText(CredentialFile, jsonDocument.ToString());
         }
     }

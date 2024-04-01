@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("XmlIdentity")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f18c24a777227af8bda82bdabffaca66412fc18e")]
 [assembly: System.Reflection.AssemblyProductAttribute("XmlIdentity")]
 [assembly: System.Reflection.AssemblyTitleAttribute("XmlIdentity")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -88,6 +88,19 @@
           }
         }
       },
+      "Microsoft.AspNetCore.DataProtection.Abstractions/8.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0/Microsoft.AspNetCore.DataProtection.Abstractions.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/Microsoft.AspNetCore.DataProtection.Abstractions.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore/8.0.0": {
         "type": "package",
         "dependencies": {
@@ -1650,6 +1663,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v8.0",
         "dependencies": {
+          "Microsoft.AspNetCore.DataProtection.Abstractions": "8.0.0",
           "Microsoft.AspNetCore.Identity.UI": "8.0.0"
         },
         "compile": {
@@ -1754,6 +1768,25 @@
         "lib/netstandard2.0/Microsoft.AspNetCore.Cryptography.KeyDerivation.xml",
         "microsoft.aspnetcore.cryptography.keyderivation.8.0.0.nupkg.sha512",
         "microsoft.aspnetcore.cryptography.keyderivation.nuspec"
+      ]
+    },
+    "Microsoft.AspNetCore.DataProtection.Abstractions/8.0.0": {
+      "sha512": "ObNtj57DXbIIVAhNSKA6/c1/EaW35Dct480dzZ9NPXZ2fw3Z5FS/xiKKC7+1R2PBwt2Vw7a2Amu1tNvBKwyFNQ==",
+      "type": "package",
+      "path": "microsoft.aspnetcore.dataprotection.abstractions/8.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/net462/Microsoft.AspNetCore.DataProtection.Abstractions.dll",
+        "lib/net462/Microsoft.AspNetCore.DataProtection.Abstractions.xml",
+        "lib/net8.0/Microsoft.AspNetCore.DataProtection.Abstractions.dll",
+        "lib/net8.0/Microsoft.AspNetCore.DataProtection.Abstractions.xml",
+        "lib/netstandard2.0/Microsoft.AspNetCore.DataProtection.Abstractions.dll",
+        "lib/netstandard2.0/Microsoft.AspNetCore.DataProtection.Abstractions.xml",
+        "microsoft.aspnetcore.dataprotection.abstractions.8.0.0.nupkg.sha512",
+        "microsoft.aspnetcore.dataprotection.abstractions.nuspec"
       ]
     },
     "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore/8.0.0": {
@@ -4479,25 +4512,28 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\erikdevane\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\suppo\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {},
+    "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "Y:\\Forum\\Authentication\\BlazorAuthentication\\BlazorAuthentication.csproj",
+      "projectUniqueName": "C:\\Development\\Hermes\\Authentication\\BlazorAuthentication\\BlazorAuthentication.csproj",
       "projectName": "BlazorAuthentication",
-      "projectPath": "Y:\\Forum\\Authentication\\BlazorAuthentication\\BlazorAuthentication.csproj",
-      "packagesPath": "C:\\Users\\erikdevane\\.nuget\\packages\\",
-      "outputPath": "Y:\\Forum\\Authentication\\BlazorAuthentication\\obj\\",
+      "projectPath": "C:\\Development\\Hermes\\Authentication\\BlazorAuthentication\\BlazorAuthentication.csproj",
+      "packagesPath": "C:\\Users\\suppo\\.nuget\\packages\\",
+      "outputPath": "C:\\Development\\Hermes\\Authentication\\BlazorAuthentication\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+        "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
       ],
       "configFilePaths": [
-        "C:\\Users\\erikdevane\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\suppo\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
@@ -4511,8 +4547,8 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "Y:\\Forum\\Authentication\\XmlIdentity\\XmlIdentity.csproj": {
-              "projectPath": "Y:\\Forum\\Authentication\\XmlIdentity\\XmlIdentity.csproj"
+            "C:\\Development\\Hermes\\Authentication\\XmlIdentity\\XmlIdentity.csproj": {
+              "projectPath": "C:\\Development\\Hermes\\Authentication\\XmlIdentity\\XmlIdentity.csproj"
             }
           }
         }
@@ -4563,7 +4599,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.103/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

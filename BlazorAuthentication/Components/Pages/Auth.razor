@@ -14,7 +14,8 @@
 <AuthorizeView>
     Hello @context.User.Identity?.Name!
 
-    @context.User.IsInRole("Administrator")
+    @context.User.IsInRole(XmlIdentity.UserRoleEnum.Administrator.ToString());
+    @context.User.IsInRole(XmlIdentity.UserRoleEnum.SiteAdministrator.ToString());
     
     
 </AuthorizeView>
@@ -25,11 +26,6 @@
 
         var currentUser = ASP.GetAuthenticationStateAsync().Result;
         var userName = currentUser.User.Identity?.Name;
-        if (!string.IsNullOrEmpty(userName))
-        {
-            var user = UM.FindByNameAsync(userName).Result;
-            UM.AddToRoleAsync(user, "Administrator");
-        }
    
         return base.OnInitializedAsync();
     }

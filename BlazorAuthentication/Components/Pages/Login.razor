@@ -1,0 +1,28 @@
+﻿@page "/login"
+@inject UserManager<ApplicationUser> Manager
+
+@using BlazorAuthentication.Components.Authentication
+@using Microsoft.AspNetCore.Identity
+@using XmlIdentity
+
+<h3>TestLogin</h3>
+
+@switch (Manager.Users.Count())
+{
+    case -1:
+        <h1>Failed to load credentials</h1>
+        break;
+
+    case 0:
+        <Register></Register>
+        break;
+
+    default:
+        <LoginForm></LoginForm>
+        break;
+}
+
+@code {
+    private int userCount = -1;
+
+}

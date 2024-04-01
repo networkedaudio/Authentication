@@ -1,23 +1,23 @@
 {
   "Files": [
     {
-      "Id": "Y:\\Forum\\Authentication\\BlazorAuthentication\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\BlazorAuthentication.bundle.scp.css",
+      "Id": "C:\\Development\\Hermes\\Authentication\\BlazorAuthentication\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\BlazorAuthentication.bundle.scp.css",
       "PackagePath": "staticwebassets\\BlazorAuthentication.bundle.scp.css"
     },
     {
-      "Id": "Y:\\Forum\\Authentication\\BlazorAuthentication\\wwwroot\\app.css",
+      "Id": "C:\\Development\\Hermes\\Authentication\\BlazorAuthentication\\wwwroot\\app.css",
       "PackagePath": "staticwebassets\\app.css"
     },
     {
-      "Id": "Y:\\Forum\\Authentication\\BlazorAuthentication\\wwwroot\\bootstrap\\bootstrap.min.css",
+      "Id": "C:\\Development\\Hermes\\Authentication\\BlazorAuthentication\\wwwroot\\bootstrap\\bootstrap.min.css",
       "PackagePath": "staticwebassets\\bootstrap\\bootstrap.min.css"
     },
     {
-      "Id": "Y:\\Forum\\Authentication\\BlazorAuthentication\\wwwroot\\bootstrap\\bootstrap.min.css.map",
+      "Id": "C:\\Development\\Hermes\\Authentication\\BlazorAuthentication\\wwwroot\\bootstrap\\bootstrap.min.css.map",
       "PackagePath": "staticwebassets\\bootstrap\\bootstrap.min.css.map"
     },
     {
-      "Id": "Y:\\Forum\\Authentication\\BlazorAuthentication\\wwwroot\\favicon.png",
+      "Id": "C:\\Development\\Hermes\\Authentication\\BlazorAuthentication\\wwwroot\\favicon.png",
       "PackagePath": "staticwebassets\\favicon.png"
     },
     {

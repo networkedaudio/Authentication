@@ -1,0 +1,72 @@
+﻿@using System.ComponentModel.DataAnnotations
+@using System.Text
+@using System.Text.Encodings.Web
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.WebUtilities
+@using XmlIdentity
+
+@inject UserManager<ApplicationUser> UserManager
+@inject IUserStore<ApplicationUser> UserStore
+@inject SignInManager<ApplicationUser> SignInManager
+
+<h3>AddUser</h3>
+<input type="text" @bind="NewUserName" /> <br />
+<input type="password" @bind="NewPassword" />
+<button @onclick="() => AddNewUser()">Add new user</button>
+
+@code {
+
+    public string NewUserName = "new@user.name";
+    public string NewPassword = Guid.NewGuid().ToString();
+
+    [Parameter]
+    public EventCallback<ApplicationUser> OnUserAdd { get; set; }
+
+    private async Task AddUserToTable(ApplicationUser newUser)
+    {
+        await OnUserAdd.InvokeAsync(newUser);
+    }
+
+    private async void AddNewUser()
+    {
+        // check if name already exists
+
+        var existingUser = await UserStore.FindByNameAsync(NewUserName, CancellationToken.None);
+
+        if(existingUser != null)
+        {
+            // send message
+            return;
+        }
+
+        var user = CreateUser();
+
+        await UserStore.SetUserNameAsync(user, NewUserName, CancellationToken.None);
+
+        var result = await UserManager.CreateAsync(user, NewPassword);
+
+        if (!result.Succeeded)
+        {
+            // identityErrors = result.Errors;
+            return;
+        } else
+        {
+            await AddUserToTable(user);
+        }
+
+       // Logger.LogInformation("User created a new account with password.");
+    }
+
+    private ApplicationUser CreateUser()
+    {
+        try
+        {
+            return Activator.CreateInstance<ApplicationUser>();
+        }
+        catch
+        {
+            throw new InvalidOperationException($"Can't create an instance of '{nameof(ApplicationUser)}'. " +
+                $"Ensure that '{nameof(ApplicationUser)}' is not an abstract class and has a parameterless constructor.");
+        }
+    }
+}

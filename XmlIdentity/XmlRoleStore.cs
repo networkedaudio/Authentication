@@ -11,7 +11,8 @@ namespace XmlIdentity
     public class XmlRoleStore : IRoleStore<IdentityRole>
     {
         public XmlRoleStore()
-        { 
+        {
+            CredentialStores.Deserialize();
         }
 
         public Task<IdentityResult> CreateAsync(IdentityRole role, CancellationToken cancellationToken)
@@ -73,11 +74,10 @@ namespace XmlIdentity
         public Task SetNormalizedRoleNameAsync(IdentityRole role, string? normalizedName, CancellationToken cancellationToken)
         {
             Guid.TryParse(role.Id, out var id);
-            CredentialStores.Roles.AddOrUpdate(id, role, (key, oldValue) =>
-            {
-                role.NormalizedName = normalizedName;
-                return role;
-            });
+
+            CredentialStores.Roles.AddOrUpdate(id, role, (key, oldValue) => role);
+            CredentialStores.Roles[id].NormalizedName = normalizedName;
+
             CredentialStores.Serialize();
 
             return Task.CompletedTask;
@@ -122,7 +122,7 @@ namespace XmlIdentity
 
         Task<IdentityRole?> IRoleStore<IdentityRole>.FindByNameAsync(string normalizedRoleName, CancellationToken cancellationToken)
         {
-            var foundByName = CredentialStores.Roles.Values.Where(x => x.NormalizedName == normalizedRoleName);
+            var foundByName = CredentialStores.Roles.Values.Where(x => x.NormalizedName.Equals(normalizedRoleName, StringComparison.OrdinalIgnoreCase));
             if (foundByName.Count() > 0) {
                 return Task.FromResult(foundByName.First());
             } else
@@ -130,5 +130,7 @@ namespace XmlIdentity
                 return Task.FromResult<IdentityRole>(null);
             }
         }
+
+
     }
 }

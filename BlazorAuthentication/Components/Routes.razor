@@ -3,7 +3,7 @@
     <Found Context="routeData">
         <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(Layout.MainLayout)">
             <NotAuthorized>
-                <RedirectToLogin />
+                <BlazorAuthentication.Components.Pages.Login />
             </NotAuthorized>
         </AuthorizeRouteView>
         <FocusOnNavigate RouteData="@routeData" Selector="h1" />

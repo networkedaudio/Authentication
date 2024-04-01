@@ -1,0 +1,90 @@
+﻿@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Identity
+@using XmlIdentity
+@inject AuthenticationStateProvider ASP
+@inject UserManager<ApplicationUser> UM
+@rendermode InteractiveServer
+
+<AuthorizeView>
+    @if (@context.User.IsInRole(XmlIdentity.UserRoleEnum.Administrator.ToString()))
+    {
+        <table class="userTable">
+            <thead>
+                <tr>
+                    <th class="userTableName">
+                        User Name
+                    </th>
+                    @foreach (var role in Enum.GetNames(typeof(XmlIdentity.UserRoleEnum)))
+                    {
+                        <th class="userRoleHeader">@role</th>
+                    }
+                    <th class="userTableButton">Lock Out</th>
+                    <th class="userTableButton">Remove</th>
+                </tr>
+
+            </thead>
+            @foreach (var user in UserTables)
+            {
+                <tr>
+                    <td class="userTableKey">@user.Key</td>
+                    @foreach (var role in Enum.GetNames(typeof(XmlIdentity.UserRoleEnum)))
+                    {
+                        <td class="userTableCheck"><input class="userTableCheckBox" type="checkbox" @onclick="() => Click(user.Key, role)" checked="@user.Value.Contains(role)"></input></td>
+                    }
+                    <td class="userTableButton"><button>Lock Out</button></td>
+                    <td class="userTableButton"><button>Remove</button></td>
+                </tr>
+            }
+        </table>
+        <br />
+        <BlazorAuthentication.Components.Authentication.AddUser OnUserAdd="@AddedUser"></BlazorAuthentication.Components.Authentication.AddUser>
+    }
+</AuthorizeView>
+@code {
+    Dictionary<ApplicationUser, IList<string>> UserTables = new();
+
+    private void updateUserTable()
+    {
+        UserTables.Clear();
+
+        foreach (var user in UM.Users.ToList().OrderBy(x => x.Name))
+        {
+
+            var roles = UM.GetRolesAsync(user);
+
+            if (!UserTables.ContainsKey(user))
+            {
+                UserTables.Add(user, roles.Result);
+            }
+        }
+    }
+
+    private void AddedUser(ApplicationUser user)
+    {
+        updateUserTable();
+        InvokeAsync(StateHasChanged);
+    }
+
+    protected override Task OnInitializedAsync()
+    {
+
+        updateUserTable();
+        return base.OnInitializedAsync();
+    }
+
+    private void Click(ApplicationUser user, string role)
+    {
+
+        if (UM.GetRolesAsync(user).Result.Contains(role))
+        {
+            UM.RemoveFromRoleAsync(user, role);
+        } 
+        else
+        {
+            UM.AddToRoleAsync(user, role);
+        }
+
+        updateUserTable();
+        InvokeAsync(StateHasChanged);
+    }
+}
